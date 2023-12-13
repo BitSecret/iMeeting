@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sysu.zyb.panellistlibrary.CheckableLinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:gravity="center_vertical"
+    android:divider="@drawable/bg_layout_dividers"
+    android:showDividers="middle">
+
+    <TextView
+        android:id="@+id/id_tv_01"
+        android:layout_width="70dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        tools:text="01"/>
+
+    <TextView
+        android:id="@+id/id_tv_02"
+        android:layout_width="70dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        tools:text="02"/>
+
+    <TextView
+        android:id="@+id/id_tv_03"
+        android:layout_width="70dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        tools:text="03"/>
+    <TextView
+        android:id="@+id/id_tv_04"
+        android:layout_width="70dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        tools:text="04"/>
+    <TextView
+        android:id="@+id/id_tv_05"
+        android:layout_width="70dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        tools:text="05"/>
+    <TextView
+        android:id="@+id/id_tv_06"
+        android:layout_width="70dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        tools:text="06"/>
+    <TextView
+        android:id="@+id/id_tv_07"
+        android:layout_width="70dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        tools:text="07"/>
+    <TextView
+        android:id="@+id/id_tv_08"
+        android:layout_width="70dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        tools:text="08"/>
+    <TextView
+        android:id="@+id/id_tv_09"
+        android:layout_width="70dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        tools:text="09"/>
+    <TextView
+        android:id="@+id/id_tv_10"
+        android:layout_width="70dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        tools:text="10"/>
+    <TextView
+        android:id="@+id/id_tv_11"
+        android:layout_width="70dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        tools:text="11"/>
+    <TextView
+        android:id="@+id/id_tv_12"
+        android:layout_width="70dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        tools:text="12"/>
+    <TextView
+        android:id="@+id/id_tv_13"
+        android:layout_width="70dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        tools:text="13"/>
+    <TextView
+        android:id="@+id/id_tv_14"
+        android:layout_width="70dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        tools:text="14"/>
+    <TextView
+        android:id="@+id/id_tv_15"
+        android:layout_width="70dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        tools:text="15"/>
+
+
+
+</sysu.zyb.panellistlibrary.CheckableLinearLayout>

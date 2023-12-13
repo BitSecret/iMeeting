@@ -1,0 +1,161 @@
+{% extends 'mainsystem/base.html' %}
+{% block body %}
+{% load staticfiles %}
+<style>
+    #mianBlock{
+        height: auto;
+        padding: 15px;
+        padding-bottom: 700px;
+    }
+    #imgblock {
+        width: 50%;
+        height: 50%;
+        text-align: center;
+        margin:30px auto;
+    }
+    #preview {
+        margin: 5px;
+    }
+    #imgLabel {
+        border: solid;
+    }
+    #imgLabel:hover,
+    #imgLabel:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+</style>
+<div class="ui inverted ui inverted vertical center aligned segment" id="mianBlock">
+    {% if username %}
+    <h1>我的档案</h1>
+    <div id="imgblock">
+        <!--占位图-->
+        <div class="ui small image">
+        <form enctype="multipart/form-data" action="{% url 'MTRsystem:deal_upload_img' %}" method="POST">
+            {% csrf_token %}
+            <input id="imgPicker" type="file" accept="image/png, image/jpeg" name="userimg" style="display:none"/>
+            {% if img != 'None'%}
+            <img id="preview" src="{{ MEDIA_URL }}{{ img }}" />
+            {% else %}
+            <img id="preview" src="{% static '/img/emptyblock.png' %}" />
+            {% endif %}
+            <label id="imgLabel" for="imgPicker">更新照片</label>
+            <button id="submit_button" type="submit" style="display:none">提交</button>
+            {% if check_feature %}
+            <div class="ui success message">
+              <i class="close icon"></i>
+              <div class="header">
+                您的照片有效！
+              </div>
+              <p>现在，你可以通过人脸识别通过闸机</p>
+            </div>
+            {% else %}
+            <div class="ui negative message">
+              <i class="close icon"></i>
+              <div class="header">
+                您的照片无效！
+              </div>
+              <p>请上传清晰免冠jpg格式照片以便通过闸机</p>
+            </div>
+            {% endif %}
+        </form>
+        </div>
+    </div>
+
+    <!-- 载入中 -->
+    <div id="dataLoad" style="display:none"><!--页面载入显示-->
+        <div class="ui icon message">
+          <i class="notched circle loading icon"></i>
+          <div class="content">
+            <div class="header">
+              等一会
+            </div>
+            <p>正在处理图片, 请稍后...</p>
+          </div>
+        </div>
+    </div>
+
+    <h1>用户名:{{ username }}</h1>
+    <h1>昵称:<p id="editNickName" style="display:inline">{{ nick_name }}</p></h1>
+    <h1>手机号:<p id="editPhoneNumber" style="display:inline">{{ phone_number }}</p></h1>
+    <h1>邮箱:<p id="editEmail" style="display:inline">{{ email }}</p></h1>
+    {% else %}
+    <p>登陆后使用该功能...</p>
+    {% endif%}
+</div>
+
+<script src="{% static '/js/jquery.js' %}" type="text/javascript"></script>
+<script>
+
+// 编辑信息
+$(function(){
+    $('p').click(function(){
+        var td=$(this); //为后面文本框变成文本铺垫
+        var text=$(this).text();
+        var edit_type = this.id;
+        console.log(edit_type);
+        var input=$('<input type="text" class="edit" value="'+text+'">');
+        $(this).html( input );
+
+        //阻止表单默认点击行为
+        $('input').click(function(){
+            return false;
+        }); 
+
+        //点击自动全选中表单的内容
+        $('input').select(); 
+
+        //确认修改，表单失去焦点文本框变成文本
+        $('input').blur(function(){
+            var nextxt=$(this).val();
+            td.html(nextxt);
+            $.post("/edit_info/",
+              {
+                "eidt_info": nextxt,
+                "edit_type": edit_type,
+              },
+              function(data,status){
+                console.log(data)
+              }
+            );
+        }); 
+    });
+})
+
+//高亮档案
+$("a:contains(档案)").addClass("active");
+document
+.querySelector('#imgPicker')
+.addEventListener('change', function(){
+    //当没选中图片时，清除预览
+    if(this.files.length === 0){
+        document.querySelector('#preview').src = '';
+        return;
+    }
+    else{
+        $('#submit_button').css("display", "inline")
+    }
+    
+    //实例化一个FileReader
+    var reader = new FileReader();
+
+    reader.onload = function (e) {
+        //当reader加载时，把图片的内容赋值给
+        document.querySelector('#preview').src = e.target.result;
+    };
+
+//读取选中的图片，并转换成dataURL格式
+reader.readAsDataURL(this.files[0]);
+}, false);
+$(".close").click(function(){
+    $(".ui.message").css("display", "none");
+});
+//页面载入时
+$(document).ready(function() {
+$("#dataLoad").hide(); //页面加载完毕后即将DIV隐藏
+$("#submit_button").click(function(){$("#dataLoad").show();}); //为指定按钮添加数据加载动态显示：即将DIV显示出来
+});
+
+</script>
+{% endblock %}

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/booking_room_number"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:text="101"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/booking_room_remark"
+        app:layout_constraintTop_toBottomOf="@id/booking_room_number"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:layout_marginStart="@dimen/dp_10"
+        android:hint="填写备注"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/booking_room_year"
+        android:text="2019-2-3"
+        app:layout_constraintTop_toBottomOf="@id/booking_room_remark"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/booking_room_start_time"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/booking_room_start_time"
+        android:text="14:00"
+        app:layout_constraintTop_toTopOf="@id/booking_room_year"
+        app:layout_constraintStart_toEndOf="@id/booking_room_year"
+        app:layout_constraintEnd_toStartOf="@id/booking_room_end_time_spinner"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Spinner
+        android:id="@+id/booking_room_end_time_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        app:layout_constraintStart_toEndOf="@id/booking_room_start_time"
+        app:layout_constraintTop_toTopOf="@id/booking_room_start_time"
+        app:layout_constraintBottom_toBottomOf="@id/booking_room_start_time">
+    </Spinner>
+
+</android.support.constraint.ConstraintLayout>

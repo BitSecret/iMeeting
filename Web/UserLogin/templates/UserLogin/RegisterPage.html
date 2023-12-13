@@ -1,0 +1,25 @@
+{% extends 'UserLogin/FormBasePage.html' %}
+{% block title %}
+<title>注册</title>
+{% endblock %}
+
+{% block form %}
+{% if check %}
+<script>
+    var res = confirm("注册成功!");
+    if (res == true)
+    {
+        window.location.href="Login";
+    }
+</script>
+{% endif%}
+<form class="form" action="{% url 'UserLogin:Register' %}" method="post">
+    <h3 align="center">注册</h3>
+    {% csrf_token %}
+    {{ form }}
+    <div class="flex-left top-gap text-small">
+        <div class="unit-2-3"><span>已有账号？<a href="{% url 'UserLogin:Login' %}">立即登录</a></span></div>
+    </div>
+    <button type="submit" class="btn btn-primary btn-block">注册</button>
+</form>
+{% endblock%}

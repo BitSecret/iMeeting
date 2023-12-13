@@ -1,0 +1,408 @@
+{% extends 'mainsystem/base.html' %}
+{% block body%}
+<style>
+  .arrow.icon{
+    cursor:pointer;
+  }
+  .selectable{
+    cursor:pointer;
+  }
+  #activityTitle{
+    padding: 2%;
+  }
+  .ortherSelectedTd{
+    cursor:pointer;
+    background-color: #AFD7D6;
+  }
+  .mySelectedTd{
+    cursor:pointer;
+    background-color: #86C166;
+  }
+  .selectingTd{
+    background-color: #86C166;
+  }
+  .selectedBlock{
+    width: 80%;
+    height: 50%;
+    padding: 2%;
+    background-color: #efefef;
+  }
+  #bookingButton{
+    /*position: relative;*/
+    float:right;
+    /*left:20px;
+    bottom:20px;*/
+  }
+  .datetimeSelect{
+      position: relative;
+      /*删除select的箭头*/
+      appearance:none;
+      -moz-appearance:none;
+      -webkit-appearance:none;
+  }
+  .ui.raised.segment{
+    overflow:auto;
+    position: relative;
+    top: 40px;
+  }
+  /* 弹窗背景(background) */
+  #win {
+      display: none; /* 默认隐藏 */
+      position: fixed; /* 固定定位 */
+      z-index: 1; /* 设置在顶层 */
+      left: 0;
+      top: 0;
+      width: 100%; 
+      height: 100%;
+      overflow: auto; 
+      background-color: rgba(0,0,0,0.4); 
+  }
+   
+  /* 弹窗内容 */
+  .win-content {
+      z-index: 2;
+      width:400px;/*定宽*/
+      margin:200px auto;
+      background-color: #fefefe; 
+      padding: 20px 20px 40px 20px;
+      border: 1px solid #888; 
+  }
+   
+  /* 关闭按钮 */
+  .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+  }
+   
+  .close:hover,
+  .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+  }
+</style>
+
+<!-- 弹窗 -->
+<div id="win">
+ 
+  <!-- 弹窗内容 -->
+  <div class="win-content">
+    <span class="close">&times;</span>
+    <p id="selectedRoom">会议室n</p>
+    <div class="ui input" id="activityTitle">
+      <input maxlength="32" type="text" id="remark" autofocus="autofocus" placeholder="添加活动标题">
+    </div>
+    <!-- 选择日期与时间 -->
+    <div class="selectedBlock">
+      <!-- 选择日期 -->
+      <input id="windowDate" type="date">
+      <!-- 选择开始时间 -->
+      <select class="datetimeSelect" id="startTime">
+        <!-- <option value="">下午12:00</option>
+        <option value="">下午12:00</option> -->
+      </select>
+      ——
+      <!-- 选择结束时间 -->
+      <select class="datetimeSelect" id="endTime">
+        <!-- <option value="">下午12:00</option>
+        <option value="">下午12:00</option> -->
+      </select>
+    </div>
+    <div class="ui primary button" id="bookingButton">保存</div>
+  </div>
+ 
+</div>
+
+
+<h1 align="center">会议室预定</h1>
+<div class="ui compact menu">
+  <input id="date" type="date">
+  <a class="ui button" id="DateJmp">跳转日期</a>
+</div>
+<i class="left arrow icon"></i> 
+<i class="right arrow icon"></i>
+
+<table class="ui celled table" id="BookingTable">
+  <thead>
+    <tr class="ui fixed"><th>#</th>
+        {% for time in times %}
+        <th>{{ time }}</th>
+        {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+    {% for room in rooms %}
+    <tr>
+        <td><strong>{{ room }}</strong></td>
+        {% for time in times %}
+          <td class="selectable"></td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% load staticfiles %}
+<script src="{% static '/js/jquery.js' %}" type="text/javascript"></script>
+<script type="text/javascript" charset="utf-8">
+  $(function(){
+    //转换日期查询预定状态
+    function switchDate(){
+      $(".ortherSelectedTd").toggleClass("ortherSelectedTd");
+      $(".mySelectedTd").toggleClass("mySelectedTd");
+      var date = $("#date").val();
+      console.log(date);
+      $.post("/room_status_by_date/",
+      {
+        "date": date,
+      },
+      function(data,status){
+        // 他人预定
+        console.log(data);
+        for (room in data["others_room"]){
+          for (col of data["others_room"][room]){
+            row = $("#BookingTable tr td :contains(" + room + ")").parent().parent().prevAll().length + 1
+            cssSelect = "#BookingTable tr:eq(" + row + ") td:eq(" + col + ")"
+            $(cssSelect).toggleClass("ortherSelectedTd");
+            $(cssSelect).toggleClass("selectable");
+          }
+        }
+        // 我的预定
+        for (room in data["my_room"]){
+          for (col of data["my_room"][room]){
+            row = $("#BookingTable tr td :contains(" + room + ")").parent().parent().prevAll().length + 1
+            cssSelect = "#BookingTable tr:eq(" + row + ") td:eq(" + col + ")"
+            $(cssSelect).toggleClass("mySelectedTd");
+            $(cssSelect).toggleClass("selectable");
+          }
+        }
+      });
+    }
+
+    //高亮预定
+    $("a:contains(预定)").addClass("active");
+    //跳转日期#DateJmp按钮响应ajax
+    $("#DateJmp").click(switchDate);
+
+    // 初始化日期选择
+    function initDate(){
+      var now = new Date(); //现在时间
+      var nextYear = new Date(); //明年时间
+      nextYear.setYear(now.getFullYear() + 1);
+      nowYearMonthDay = switchToYearMonthDay(now);
+      nextYearMonthDay = switchToYearMonthDay(nextYear);
+      $("#date").attr('value', nowYearMonthDay);
+      $("#date").attr('min', nowYearMonthDay);
+      $("#date").attr('max', nextYearMonthDay);
+    };
+    // 初始化弹窗日期选择
+    function initWindowDate(){
+      $("#windowDate").attr('value', $("#date").val());
+      $("#windowDate").attr('min', $("#date").attr('min'));
+      $("#windowDate").attr('max', $("#date").attr('max'));
+    };
+    initDate();
+    switchDate();
+
+    // 转换 Date() 成 year-month-day格式
+    function switchToYearMonthDay(date){
+      // 获取当前月份
+      var nowMonth = date.getMonth() + 1;
+      // 获取当前是几号
+      var strDate = date.getDate();
+      // 添加分隔符“-”
+      var seperator = "-";
+      // 对月份进行处理，1-9月在前面添加一个“0”
+      if (nowMonth >= 1 && nowMonth <= 9) {
+         nowMonth = "0" + nowMonth;
+      }
+      // 对日进行处理，1-9号在前面添加一个“0”
+      if (strDate >= 0 && strDate <= 9) {
+         strDate = "0" + strDate;
+      }
+      // 最后拼接字符串，得到一个格式为(yyyy-MM-dd)的日期
+      var nowDate = date.getFullYear() + seperator + nowMonth + seperator + strDate;
+      return nowDate;
+    }
+
+
+    function closeWindow(){
+      //隐藏弹窗
+        $('#win').fadeOut();
+        //删除时间选项
+        $("#startTime").html("");
+        $("#endTime").html("");
+        $("#BookingTable .selectingTd").toggleClass("selectingTd");
+    }
+
+    //弹窗
+    $(".selectable").click(function(){
+      if ($(this).attr("class") != "selectable"){
+        return;
+      }
+      // 初始化日期
+      initWindowDate();
+      // 选中高亮
+      $(this).toggleClass("selectingTd");
+      // 获取单元格位置
+      var row = $(this).parent().prevAll().length + 1;
+      var col = $(this).prevAll().length;
+      var roomNumber = document.getElementById("BookingTable").rows[row].cells[0].innerHTML;
+      var selectedTime = document.getElementById("BookingTable").rows[0].cells[col].innerHTML;
+      //获取房间号选择
+      $("#selectedRoom").html(roomNumber);
+      console.log("我是第 "+row+" 行第 "+col+" 列, 房间号: " + roomNumber + "时间:" + selectedTime);
+
+      //时间选择
+      var hour = selectedTime.split(":")[0];
+      var minute = selectedTime.split(":")[1];
+      var startTime = new Date();//用户选择开始时间
+      var endTime = new Date(); //用户选择结束时间
+      startTime.setMinutes(minute);
+      startTime.setHours(8);
+      endTime.setMinutes(minute);
+      endTime.setHours(hour);
+
+      //添加开始时间候选项
+      for (var i = 8; i < 23; i++)
+      {
+        $("#startTime").append("<option>" + startTime.getHours() + ":00" + "</option>");
+        startTime.setHours(startTime.getHours() + 1);
+      }
+      $("#startTime").val(hour + ":00");
+
+      //添加结束时间候选项
+      for (var i = 0; i < 8; i++){
+        if (endTime.getHours() >= 23){
+            break;
+        }
+        endTime.setMinutes(endTime.getMinutes() + 15);
+        var minuteSymbol = endTime.getMinutes();
+        var hourSymbol = endTime.getHours();
+        if (minuteSymbol == 0){
+          minuteSymbol = "00";
+        }
+        $("#endTime").append("<option>" + hourSymbol + ":" + minuteSymbol + "</option>");
+      }
+
+      //开始时间改变，结束时间也随着改变
+      $("#startTime").change(function(){
+        $("#endTime").html("");
+        //初始化结束时间
+        endTime.setHours($("#startTime").val().split(":")[0]);
+        endTime.setMinutes(0);
+        //添加结束时间候选项
+        for (var i = 0; i < 8; i++){
+          if (endTime.getHours() >= 23){
+            break;
+          }
+          endTime.setMinutes(endTime.getMinutes() + 15);
+          var minuteSymbol = endTime.getMinutes();
+          var hourSymbol = endTime.getHours();
+          if (minuteSymbol == 0){
+            minuteSymbol = "00";
+          }
+          $("#endTime").append("<option>" + hourSymbol + ":" + minuteSymbol + "</option>");
+        }
+      });
+      
+
+      // 弹出操作窗口
+      $('#win').fadeIn();
+    });
+
+
+    // 点击 <span> (x), 关闭弹窗
+    $('.close').click(closeWindow);
+    // 点击其他地方关闭弹窗
+    $('#win').bind("click", closeWindow);
+    // 阻止冒泡事件
+    $('.win-content').bind("click", function(event){
+        event.stopPropagation();
+    });
+
+    //检查日期合法
+    function checkDate(d){
+      var today = new Date();
+      var year = d.split("-")[0];
+      var month = d.split("-")[1] - 1;
+      var day = d.split("-")[2];
+      var date = new Date(year, month, day, 23, 59, 59);
+      console.log(d);
+      console.log(date);
+
+      if (today <= date){
+        return true;
+      }
+      else
+      {
+        return false;
+      }
+    }
+
+    $(".right.arrow.icon").click(function(){
+      var nowdate = $("#date").val()
+      var nextdate = new Date(nowdate.split("-")[0], nowdate.split("-")[1] - 1, nowdate.split("-")[2])
+      console.log(nextdate)
+      nextdate.setDate(nextdate.getDate() + 1);
+      $("#date").attr("value", switchToYearMonthDay(nextdate))
+      switchDate();
+    });
+    $(".left.arrow.icon").click(function(){
+      var nowdate = $("#date").val()
+      var nextdate = new Date(nowdate.split("-")[0], nowdate.split("-")[1] - 1, nowdate.split("-")[2])
+      console.log(nextdate)
+      nextdate.setDate(nextdate.getDate() - 1);
+      $("#date").attr("value", switchToYearMonthDay(nextdate))
+      switchDate();
+    });
+
+    //点击保存-->ajax下单 检验日期时间合法性，获取开始时间，结束时间，用户名，房间号等信息，创建订单
+    $("#bookingButton").click(function(){
+      //判断登录
+      {% if username %}
+        var date = $("#windowDate").val();
+        
+        //判断日期合法
+        if (checkDate(date)){
+          var remark = $("#remark").val();//备注信息
+          var startTime = $("#startTime").val(); 
+          var endTime = $("#endTime").val();
+          var roomNumber = $("#selectedRoom").text();
+          var username = "{{ username }}";
+          console.log("date" + date);
+          $.post("/booking/",
+          {
+            "remark": remark,
+            "startTime": startTime,
+            "endTime": endTime,
+            "date": date,
+            "roomNumber": roomNumber,
+            "username": username,
+          },
+          function(data,status){
+            console.log("Data: " + data["booking_status"] + "\nStatus: " + status);
+            if (data["booking_status"] == 0){
+              alert("预定成功！");
+              switchDate();
+              closeWindow();
+            }
+            else{
+              alert("预定失败！" + data["booking_status"]);
+              closeWindow();
+            }
+          });
+        }
+        else{
+          alert("放下吧，往前看...");
+        }
+        
+      {% else %}
+        alert("请登录...");
+      {% endif %}
+    });
+  });
+</script>
+{% endblock %}

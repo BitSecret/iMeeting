@@ -1,0 +1,42 @@
+{% extends 'mainsystem/base.html' %}
+{% block body %}
+{% load staticfiles %}
+  <div class="ui inverted vertical masthead center aligned segment">
+    <div class="ui text container">
+      <h1 class="ui inverted header">
+        预定一个会议室
+      </h1>
+      <h2>你想做的时候就去做</h2>
+      <a href="{% url 'MTRsystem:mainsystem'%}"><div class="ui huge primary button">开始 <i class="right arrow icon"></i></div></a>
+    </div>
+
+  </div>
+
+
+  <div class="ui vertical stripe segment">
+    <div class="ui middle aligned stackable grid container">
+      <div class="row">
+        <div class="eight wide column">
+          <h3 class="ui header">会议室预定系统能做什么？</h3>
+          <p>众多的会议室，怎样避免会议冲突？怎样实现非人工管理？怎样方便快捷的预定会议？怎样及时通知与会人员等等？总之，怎样才能提升会议室资源的利用效率？</p>
+          <h3 class="ui header">智能会议室预定系统</h3>
+          <p>智能会议室预定系统，实现会议室无人值守管理，用户通过网络可随时了解会议室使用情况，并预订自己的会议，系统自动通知与会人员。</p>
+        </div>
+        <div class="six wide right floated column">
+          <img src="" class="ui large bordered rounded image">
+        </div>
+      </div>
+      <div class="row">
+        <div class="center aligned column">
+          <a href="{% url 'MTRsystem:mainsystem'%}" class="ui huge button">开始预定</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script src="{% static '/js/jquery.js' %}" type="text/javascript"></script>
+<script>
+  $("a:contains(主页)").addClass("active");
+</script>
+
+{% endblock %}

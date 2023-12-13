@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".ui.login.LoginActivity">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:textColor="@color/MainTextColor"
+        android:textSize="22sp"
+        android:text="JUST DO IT." />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:gravity="center"
+            android:drawablePadding="4dp"
+            android:drawableLeft="@drawable/icon_user"
+            android:textColor="@color/SecondTextColor"
+            android:text="账号"/>
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="10dp">
+            <EditText
+                android:id="@+id/et_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:textCursorDrawable="@drawable/edit_text_cursor_style"
+                android:background="@null"
+                android:singleLine="true"
+                android:inputType="text"
+                android:maxLength="11"
+                android:textSize="15sp"
+                android:textColor="@color/SecondTextColor"
+                android:hint="请输入账号"/>
+            <View
+                style="@style/LineHorizontal"/>
+        </LinearLayout>
+    </LinearLayout>
+    <com.alen.MeetingRoom.widget.NoScrollViewPager
+        android:id="@+id/vp_login_content"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"/>
+
+    <Button
+        android:id="@+id/btn_complete"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/round_button_style"
+        android:textSize="18sp"
+        android:textColor="@color/MainColor"
+        android:text="登录"/>
+
+</LinearLayout>

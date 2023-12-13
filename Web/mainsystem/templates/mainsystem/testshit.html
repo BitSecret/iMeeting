@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>MeetingRoom</title>
+</head>
+<body>
+
+<style>
+body {
+  padding: 10px;
+}
+
+.custom-table {
+  position: relative;
+}
+
+/** 右侧边框 */
+.custom-table::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  border-right: 1px solid #ddd;
+}
+
+/** 底部边框 */
+.custom-table::after {
+  content: "";
+  display: block;
+  height: 0px;
+  position: relative;
+  top: -1px;
+  border-bottom: 1px solid #ddd;
+}
+
+.custom-table .table {
+  table-layout: fixed;
+  margin-bottom: 0;
+}
+
+/** Header 右侧的空隙 */
+.custom-table th.gutter {
+  width: 15px;
+  padding: 0;
+}
+
+.custom-table--body-wrapper {
+  overflow: auto;
+  margin-top: -1px;
+}
+</style>
+
+<div class="custom-table">
+  <table class = "table table-bordered">
+    <tr>
+      <th> Game ID </th>
+      <th> Status </th>
+      <th> Players </th>
+      <th> Turn </th>
+      <th> Last Turn </th>
+      <th> Operations </th>
+      <th class="gutter"></th>
+    </tr>
+  </table>
+  <div class="custom-table--body-wrapper" style="height: 300px;">
+    <table class = "table table-hover table-bordered">
+     <tr>
+       <td> 1 </td>
+       <td> IN PROGRESS </td>
+       <td> 4/4 </td>
+       <td> tedbeem </td>
+       <td> 11/12/13 6:30 PM </td>
+       <td> <button class = "btn btn-primary"> View </button> </td>
+     </tr>
+     <tr>
+       <td> 2 </td>
+       <td> RECRUITING </td>
+       <td> 4/5 </td>
+       <td> N/A </td>
+       <td> 11/12/13 3:10 PM </td>
+       <td> <button class = "btn btn-primary"> View </button> </td>
+     </tr>
+     <tr>
+       <td> 13 </td>
+       <td> IN PROGRESS </td>
+       <td> 3/3 </td>
+       <td> D-Halt-on </td>
+       <td> 11/12/13 9:00 AM </td>
+       <td> <button class = "btn btn-primary"> View </button> </td>
+      </tr>
+      <tr>
+       <td> 1 </td>
+       <td> IN PROGRESS </td>
+       <td> 4/4 </td>
+       <td> tedbeem </td>
+       <td> 11/12/13 6:30 PM </td>
+       <td> <button class = "btn btn-primary"> View </button> </td>
+     </tr>
+     <tr>
+       <td> 2 </td>
+       <td> RECRUITING </td>
+       <td> 4/5 </td>
+       <td> N/A </td>
+       <td> 11/12/13 3:10 PM </td>
+       <td> <button class = "btn btn-primary"> View </button> </td>
+     </tr>
+     <tr>
+       <td> 13 </td>
+       <td> IN PROGRESS </td>
+       <td> 3/3 </td>
+       <td> D-Halt-on </td>
+       <td> 11/12/13 9:00 AM </td>
+       <td> <button class = "btn btn-primary"> View </button> </td>
+      </tr>
+      <tr>
+       <td> 1 </td>
+       <td> IN PROGRESS </td>
+       <td> 4/4 </td>
+       <td> tedbeem </td>
+       <td> 11/12/13 6:30 PM </td>
+       <td> <button class = "btn btn-primary"> View </button> </td>
+     </tr>
+     <tr>
+       <td> 2 </td>
+       <td> RECRUITING </td>
+       <td> 4/5 </td>
+       <td> N/A </td>
+       <td> 11/12/13 3:10 PM </td>
+       <td> <button class = "btn btn-primary"> View </button> </td>
+     </tr>
+     <tr>
+       <td> 13 </td>
+       <td> IN PROGRESS </td>
+       <td> 3/3 </td>
+       <td> D-Halt-on </td>
+       <td> 11/12/13 9:00 AM </td>
+       <td> <button class = "btn btn-primary"> View </button> </td>
+      </tr>
+      <tr>
+       <td> 1 </td>
+       <td> IN PROGRESS </td>
+       <td> 4/4 </td>
+       <td> tedbeem </td>
+       <td> 11/12/13 6:30 PM </td>
+       <td> <button class = "btn btn-primary"> View </button> </td>
+     </tr>
+     <tr>
+       <td> 2 </td>
+       <td> RECRUITING </td>
+       <td> 4/5 </td>
+       <td> N/A </td>
+       <td> 11/12/13 3:10 PM </td>
+       <td> <button class = "btn btn-primary"> View </button> </td>
+     </tr>
+     <tr>
+       <td> 13 </td>
+       <td> IN PROGRESS </td>
+       <td> 3/3 </td>
+       <td> D-Halt-on </td>
+       <td> 11/12/13 9:00 AM </td>
+       <td> <button class = "btn btn-primary"> View </button> </td>
+      </tr>
+    </table>
+  </div>
+<div>
+</div>
+</div>
+</body></html>

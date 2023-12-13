@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFF"
+    tools:context=".activity.SignActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:text="会议室"
+        android:gravity="start|center"
+        android:background="#008B8B"
+        android:id="@+id/signRoomIdTextView"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_weight="15"
+        android:orientation="horizontal"
+
+        android:background="#377">
+
+        <LinearLayout
+            android:layout_width="400dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_margin="20dp">
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2">
+                <TextView android:text="距离签到结束还剩："
+                    android:gravity="center"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:textSize="40sp"
+                    android:layout_marginBottom="10dp"/>
+
+                <TextView android:text="00分00秒"
+                    android:gravity="center"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:textSize="40sp"
+                    android:layout_marginBottom="20dp"
+                    android:id="@+id/signCountDownTextView"/>
+
+                <TableRow >
+                    <TextView android:text="会议名称："
+                        android:textSize="20sp"/>
+                    <TextView android:text=""
+                        android:textSize="20sp"
+                        android:id="@+id/signMeetingName"/>
+                </TableRow>
+
+                <TableRow >
+                    <TextView android:text="预订人："
+                        android:textSize="20sp"/>
+                    <TextView android:text=""
+                        android:textSize="20sp"
+                        android:id="@+id/signHostName"/>
+                </TableRow>
+
+                <TableRow>
+                    <TextView android:text="会议开始时间："
+                        android:textSize="20sp"/>
+                    <TextView android:text="1900年1月1日00:00:00"
+                        android:textSize="20sp"
+                        android:id="@+id/signStartTime"/>
+                </TableRow>
+
+                <TableRow>
+                    <TextView android:text="会议结束时间："
+                        android:textSize="20sp"/>
+                    <TextView android:text="1900年1月1日00:00:00"
+                        android:textSize="20sp"
+                        android:id="@+id/signEndTime"/>
+                </TableRow>
+
+                <TableRow>
+                    <TextView android:text="与会人数："
+                        android:textSize="20sp"/>
+                    <TextView android:text=""
+                        android:textSize="20sp"
+                        android:id="@+id/signParticipate"/>
+                </TableRow>
+
+                <TableRow>
+                    <TextView android:text="签到人数："
+                        android:textSize="20sp"/>
+                    <TextView android:text=""
+                        android:textSize="20sp"
+                        android:id="@+id/signArrivalPerson"/>
+                </TableRow>
+
+                <LinearLayout  android:layout_marginTop="20dp"
+                    android:orientation="vertical"
+                    android:background="@color/colorPrimary">
+                    <TextView android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="会议说明"
+                        android:textSize="20sp"
+                        android:gravity="center"/>
+                    <TextView android:layout_height="200dp"
+                        android:layout_width="match_parent"
+                        android:text=""
+                        android:textSize="15sp"
+                        android:id="@+id/signMeetingNote"/>
+                </LinearLayout>
+
+            </TableLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:layout_marginTop="10dp">
+                <Button android:id="@+id/signPostponeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="会议延期"
+                    android:layout_weight="1"
+                    android:layout_marginRight="40dp"
+                    android:onClick="onButtonClicked"/>
+                <Button android:id="@+id/signCancelButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="会议取消"
+                    android:layout_weight="1"
+                    android:layout_marginRight="40dp"
+                    android:onClick="onButtonClicked"/>
+                <Button
+                    android:id="@+id/signStartButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="现在开会"
+                    android:layout_weight="1"
+                    android:onClick="onButtonClicked"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="600dp">
+                <TextureView
+                    android:id="@+id/texture_preview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+                <com.arcsoft.arcfacedemo.widget.FaceRectView
+                    android:id="@+id/face_rect_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </FrameLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="正在获取与会人员信息..."
+                android:gravity="center"
+                android:textAlignment="gravity"
+                android:background="#FF1"
+                android:id="@+id/signUpNoteText"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="请将头部移至摄像头并稍作等待。"
+                android:gravity="center"
+                android:textAlignment="gravity"
+                android:background="#582"
+                android:id="@+id/signDownNoteText"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,359 @@
+{% extends 'mainsystem/base.html' %}
+{% block body %}
+{% load staticfiles %}
+<style>
+	.arrow.icon{
+	        cursor:pointer;
+	      }
+	.ui.checkbox{
+		display:block;
+		margin: 20px 0px;
+	}
+	#buttonBlock {
+		float:right;
+		/*position: relative;
+		top: 20px;
+		left: 200px;*/
+	}
+    #mainblock {
+        height: auto;
+        padding: 15px;
+        padding-bottom: 700px;
+    }
+    .ui.card{
+        display:inline-table;
+        margin:15px;
+    }
+	/* 弹窗背景(background) */
+	#win, #manage_win{
+	  display: none; /* 默认隐藏 */
+	  position: fixed; /* 固定定位 */
+	  z-index: 100; /* 设置在顶层 */
+	  left: 0;
+	  top: 0;
+	  width: 100%; 
+	  height: 100%;
+	  overflow: auto; 
+	  background-color: rgba(0,0,0,0.4); 
+	}
+	/* 弹窗内容 */
+	.win-content {
+	  z-index: 2;
+	  overflow: auto;
+	  width:400px;/*定宽*/
+	  margin:200px auto;
+	  background-color: #fefefe; 
+	  padding: 10px 20px 10px 20px;
+	  border: 1px solid #888; 
+	}
+
+	/* 关闭按钮 */
+	.close {
+	  color: #aaa;
+	  float: right;
+	  font-size: 28px;
+	  font-weight: bold;
+	}
+
+	.close:hover,
+	.close:focus {
+	  color: black;
+	  text-decoration: none;
+	  cursor: pointer;
+	}
+	 #saveButton{
+        float:right;
+    }
+</style>
+
+<div class="ui inverted ui inverted vertical center aligned segment" id="mainblock">
+    {% if username %}
+    <div class="ui compact menu">
+      <input id="date" type="date" value="{{ date }}">
+      <a class="ui button" id="DateJmp">跳转日期</a>
+    </div>
+	<i class="left arrow icon"></i> 
+    <i class="right arrow icon"></i>
+
+    {% if meeting%}
+    <h1 align="center">我预定的会议</h1>
+    <div class="room_block">
+        {% for m in meeting %}
+        <div class="ui card">
+          <div class="image">
+            <img src="{{ MEDIA_URL }}{{ m.room.img }}">
+          </div>
+          <div class="content">
+            <div class="header">{{m.room.room_number}} {{m.room.room_type}}</div>
+            <div class="description">
+              <p>预订者:{{ m.user.name }}</p>
+              <p>日期:{{ m.booking_date }}</p>
+              <p>时间:{{ m.start_time }}~{{ m.end_time }}</p>
+              <p>容量:{{ m.room.content }}</p>
+              <p>备注:{{ m.remark }}</p>
+            </div>
+          </div>
+          <div class="ui two bottom attached buttons" id="{{ m.id }}">
+            <div class="ui primary button manageMeeting">
+              <i class="icon"></i>
+              管理
+            </div>
+            <div class="ui red button deleteButton">
+              <i class="icon"></i>
+              删除
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% if join_meeting %}
+    <h1 align="center">我加入的会议</h1>
+    <div class="room_block">
+        {% for j in join_meeting %}
+        <div class="ui card">
+          <div class="image">
+            <img src="{{ MEDIA_URL }}{{ j.room.img }}">
+          </div>
+          <div class="content">
+            <div class="header">{{j.room.room_number}} {{j.room.room_type}}</div>
+            <div class="description">
+              <p>预订者:{{ j.user.name }}</p>
+              <p>日期:{{ j.booking_date }}</p>
+              <p>时间:{{ j.start_time }}~{{ j.end_time }}</p>
+              <p>容量:{{ j.room.content }}</p>
+              <p>预定者备注:{{ j.remark }}</p>
+              <p>你的留言: {{j.my_remark}}</p>
+            </div>
+          </div>
+          <div class="ui one bottom attached buttons">
+          	{% if j.auth %}
+          	<div class="ui green button">
+              <i class="icon"></i>
+              已通过!
+            </div>
+            {% else %}
+            <div class="ui primary button">
+              <i class="icon"></i>
+              正在等待审核!
+            </div>
+             {% endif %}
+          </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% if not join_meeting and not meeting %}
+		<div class="ui inverted vertical masthead center aligned segment">
+			<p>您当日没有预定或加入任何会议，快去预定吧！</p>
+			<div class="ui text container">
+			  <h1 class="ui inverted header">
+			    预定一个会议室
+			  </h1>
+			  <h2>你想做的时候就去做</h2>
+			  <a href="{% url 'MTRsystem:mainsystem'%}"><div class="ui huge primary button">开始 <i class="right arrow icon"></i></div></a>
+			</div>
+		</div>
+	{% endif %}
+    
+
+    {% else %}
+    <p>登陆后使用该功能...</p>
+    {% endif %}
+</div>
+
+<!-- 管理弹窗 -->
+<div id="manage_win">
+ 
+  <!-- 弹窗内容 -->
+  <div class="win-content">
+    <span class="close">&times;</span>
+    <h2 id="manageTitle" align="center">管理会议</h2>
+    注:勾选分配用户刷脸开启闸机权限
+    <div id="manageCheckBoxBlock">
+    </div>
+    <div class="ui primary button" id="saveButton">保存</div>
+  </div>
+ 
+</div>
+
+<!-- 删除弹窗 -->
+<div id="win">
+ 
+  <!-- 弹窗内容 -->
+  <div class="win-content">
+    <span class="close">&times;</span>
+    <p>确定要取消预定吗？</p>
+    <div id="buttonBlock">
+	    <div class="ui red button" id="comfirmDelete">确定</div>
+	    <div class="ui primary button" id="cancel">取消</div>
+	</div>
+  </div>
+ 
+</div>
+
+<script src="{% static '/js/jquery.js' %}" type="text/javascript"></script>
+<script>
+$(function(){
+	// 高亮我的会议
+	$("a:contains(我的会议)").addClass("active");
+	//管理弹窗
+	$(".manageMeeting").click(function(){
+		var orderID = $(this).parent().attr('id')
+		var nameList = [];
+		var remarkList = [];
+		var authList = [];
+		var checked = 'checked=""';
+		console.log(orderID);
+		$.post('/manage_meeting/',
+			{
+				"order_id":orderID
+			},
+			function(data, status){
+				nameList = data["names"];
+				remarkList = data["remarks"];
+				authList = data["checked"];
+				console.log(data);
+				if (!nameList.length) {
+					$('#manageCheckBoxBlock').append("<p>暂无请求..</p>");
+				}
+				for (x in nameList){
+					var name = nameList[x];
+					var joinRemark = remarkList[x];
+					var auth = authList[x];
+
+					if (!auth){
+						checked = "";
+						console.log("unauth");
+					}
+					else{
+						checked = 'checked=""';
+					}
+
+					var checkbox = `<div class="ui checkbox">
+									  <input ${checked} type="checkbox" name="${name}">
+									  <label>用户:<strong>${name}</strong>&nbsp&nbsp留言:<strong>${joinRemark}</strong></label>
+									</div>`
+					$('#manageCheckBoxBlock').append(checkbox);
+				}
+				console.log(nameList);
+			}
+		)
+		//弹出窗口
+		$("#manage_win").fadeIn();
+
+		//保存操作
+		$("#saveButton").unbind();
+		// 点击保存关闭弹窗
+		$('#saveButton').bind("click", function(){
+			var changeAuthJson = {
+				"order_id":orderID,
+				"checked_name":[],
+			};
+	        $("input[type='checkbox']:checked").each(function(i){//把所有被选中的复选框的值存入数组
+	            changeAuthJson["checked_name"].push(this.name);
+	        });
+	        console.log(changeAuthJson);
+			$.post('/change_auth/',
+				changeAuthJson,
+				function(data, status){
+					console.log("return data:" + data);
+				}
+			)
+			closeWindow();
+		});
+	});
+	//删除弹窗
+	$(".deleteButton").bind("click", function(){
+	    $("#win").fadeIn();
+	    var orderID = $(this).parent().attr('id');
+	    //确认取消预定
+	    $("#comfirmDelete").unbind();
+	    $("#comfirmDelete").click(function(){
+	    	disorder(orderID);
+	    	// 淡出订单
+	    	$("#" + orderID).parent().fadeOut();
+	    	closeWindow();
+    	});
+	});
+	//关闭窗口
+	function closeWindow(){
+		$('#manage_win').fadeOut();
+	    $('#win').fadeOut();
+	    $('#manageCheckBoxBlock').html("");
+	}
+
+    //取消关闭弹窗
+    $('#cancel').click(function(){
+    	closeWindow();
+    });
+
+	// 点击 <span> (x), 关闭弹窗
+	$('.close').click(closeWindow);
+	// 点击其他地方关闭弹窗
+	$('#win, #manage_win').bind("click", closeWindow);
+	$('#manage_win').bind("click", closeWindow);
+	// 阻止冒泡事件
+	$('.win-content').bind("click", function(event){
+	    event.stopPropagation();
+	});
+
+	//取消预定
+	function disorder(orderID){
+		$.post("/disorder/",
+	      {
+	        "order_id": orderID,
+	      },
+	      function(data, status){
+	        console.log("Data: " + data["disorder_status"] + "\nStatus: " + status);
+	      });
+	};
+	// 转换 Date() 成 year-month-day格式
+	function switchToYearMonthDay(date) {
+	    // 获取当前月份
+	    var nowMonth = date.getMonth() + 1;
+	    // 获取当前是几号
+	    var strDate = date.getDate();
+	    // 添加分隔符“-”
+	    var seperator = "-";
+	    // 对月份进行处理，1-9月在前面添加一个“0”
+	    if (nowMonth >= 1 && nowMonth <= 9) {
+	        nowMonth = "0" + nowMonth;
+	    }
+	    // 对日进行处理，1-9号在前面添加一个“0”
+	    if (strDate >= 0 && strDate <= 9) {
+	        strDate = "0" + strDate;
+	    }
+	    // 最后拼接字符串，得到一个格式为(yyyy-MM-dd)的日期
+	    var nowDate = date.getFullYear() + seperator + nowMonth + seperator + strDate;
+	    return nowDate;
+	}
+
+	function getMeetingDateByDate() {
+	    var day = $("#date").val();
+	    console.log(day);
+	    location.href = "/my_orders/" + day;
+	    console.log(day);
+	}
+
+	$("#DateJmp").click(getMeetingDateByDate);
+
+	$(".right.arrow.icon").click(function () {
+	    var nowdate = $("#date").val()
+	    var nextdate = new Date(nowdate.split("-")[0], nowdate.split("-")[1] - 1, nowdate.split("-")[2])
+	    console.log(nextdate)
+	    nextdate.setDate(nextdate.getDate() + 1);
+	    $("#date").attr("value", switchToYearMonthDay(nextdate))
+	    getMeetingDateByDate();
+	});
+	$(".left.arrow.icon").click(function () {
+	    var nowdate = $("#date").val()
+	    var nextdate = new Date(nowdate.split("-")[0], nowdate.split("-")[1] - 1, nowdate.split("-")[2])
+	    console.log(nextdate)
+	    nextdate.setDate(nextdate.getDate() - 1);
+	    $("#date").attr("value", switchToYearMonthDay(nextdate))
+	    getMeetingDateByDate();
+	});
+});
+</script>
+{% endblock %}

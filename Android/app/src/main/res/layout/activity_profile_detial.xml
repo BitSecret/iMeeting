@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.profile.profile_detail">
+
+    <include
+        layout="@layout/include_titlebar"/>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/profile_detail_user_card"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:layout_width="match_parent"
+        app:cardCornerRadius="@dimen/dp_10"
+        android:elevation="@dimen/dp_10"
+        android:layout_height="wrap_content">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/profile_detail_avatar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:src="@drawable/icon_user_default"
+                android:layout_width="130dp"
+                android:layout_height="130dp" />
+
+            <TextView
+                android:id="@+id/profile_detail_nickname"
+                android:text="昵称：Test"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="45dp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/profile_detail_username"
+                android:text="用户名：Test"
+                android:textSize="20sp"
+                android:layout_marginTop="@dimen/dp_10"
+                app:layout_constraintTop_toBottomOf="@id/profile_detail_nickname"
+                app:layout_constraintStart_toStartOf="@id/profile_detail_nickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v7.widget.CardView>
+    <android.support.v7.widget.CardView
+        android:id="@+id/profile_detail_email_card"
+        app:cardCornerRadius="@dimen/dp_10"
+        android:elevation="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_width="match_parent"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:layout_height="wrap_content">
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/profile_detail_email_text"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginStart="@dimen/dp_10"
+                android:textSize="15sp"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:text="邮箱：1234@work.com"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/profile_detail_phone_card"
+        app:cardCornerRadius="@dimen/dp_10"
+        android:elevation="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_width="match_parent"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:layout_height="wrap_content">
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/profile_detail_phone_text"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginStart="@dimen/dp_10"
+                android:textSize="15sp"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:text="电话：123123123"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v7.widget.CardView>
+
+
+
+</LinearLayout>

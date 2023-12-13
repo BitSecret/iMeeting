@@ -1,0 +1,16 @@
+{% extends 'UserLogin/FormBasePage.html' %}
+{% block title %}
+<title>登录</title>
+{% endblock %}
+
+{% block form %}
+<form class="form" action="{% url 'UserLogin:Login' %}" method="post">
+    <h3 align="center">登录</h3>
+    {% csrf_token %}
+    {{ form }}
+    <div class="flex-left top-gap text-small">
+        <div class="unit-2-3"><span>没有账号？<a href="{% url 'UserLogin:Register' %}">立即注册</a></span></div>
+    </div>
+    <button type="submit" class="btn btn-primary btn-block">登录</button>
+</form>
+{% endblock%}

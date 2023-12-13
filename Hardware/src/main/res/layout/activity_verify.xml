@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:orientation="vertical"
+    tools:context=".activity.VerifyActivity"
+    android:backgroundTint="#FFF"
+    android:layout_marginLeft="150dp"
+    android:layout_marginRight="150dp">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="600dp">
+        <TextureView
+            android:id="@+id/verify_texture_preview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        <com.arcsoft.arcfacedemo.widget.FaceRectView
+            android:id="@+id/verify_face_rect_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="正在初始化识别引擎"
+        android:textAlignment="center"
+        android:id="@+id/verify_message_textView"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="取消"
+        android:onClick="verifyCancelButtonClicked"
+        android:id="@+id/loginCancelButton"/>
+</LinearLayout>

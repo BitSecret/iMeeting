@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ItemView">
+
+        <attr name="set_icon" format="color|reference"/><!-- 是否包含图标 -->
+
+        <attr name="set_icon2" format="color|reference"/><!-- 是否包含图标 -->
+
+        <attr name="set_icon_margin_top" format="dimension|reference"/><!-- 图标的margin_top -->
+
+        <attr name="set_text01" format="string|reference"/><!-- 设置第一个text -->
+
+        <attr name="set_text02" format="string|reference"/><!-- 设置第二个text -->
+
+        <attr name="set_text03" format="string|reference"/><!-- 设置第三个text -->
+
+        <attr name="set_edit_hint" format="string|reference"/><!-- 设置edit的提示文字 -->
+
+        <attr name="set_edit_height" format="dimension|reference"/><!-- 设置edit的高度 -->
+
+        <attr name="set_default_height" format="dimension|reference"/><!-- 设置右侧控件默认的高度 -->
+
+        <attr name="set_text_color01" format="color|reference"/><!-- 设置第一个text颜色 -->
+
+        <attr name="set_text_color02" format="color|reference"/><!-- 设置第二个text颜色 -->
+
+        <attr name="set_text_color03" format="color|reference"/><!-- 设置第三个text颜色 -->
+
+        <attr name="have_top_line" format="boolean"/><!-- 是否有顶部分隔线,默认无 -->
+
+        <attr name="have_bottom_line" format="boolean"/><!-- 是否有底部分隔线,默认有 -->
+
+    </declare-styleable>
+
+    <declare-styleable name="SettingItemView">
+
+        <attr name="main_icon" format="reference" /><!-- 主图标 -->
+
+        <attr name="main_icon_height" format="dimension|reference"/><!-- 主图标 高 -->
+
+        <attr name="main_icon_width" format="dimension|reference"/><!-- 主图标 宽 -->
+
+        <attr name="main_icon_is_circular" format="boolean"/><!-- 是否为圆形 -->
+
+        <attr name="main_icon_round_size" format="dimension|reference"/><!-- 圆角大小 -->
+
+        <attr name="main_icon_to_title_size" format="dimension|reference"/><!-- 主图标 到标题文字的间隔 -->
+
+        <attr name="vice_icon" format="reference" /><!-- 副图标 -->
+
+        <attr name="vice_icon_height" format="dimension|reference"/><!-- 副图标 高 -->
+
+        <attr name="vice_icon_width" format="dimension|reference"/><!-- 副图标 宽 -->
+
+        <attr name="vice_icon_to_tipSize" format="dimension|reference"/><!-- 副图标 到提示文字的间隔 -->
+
+        <attr name="title_text" format="string|reference" /><!-- 标题文字 -->
+
+        <attr name="title_text_size" format="dimension|reference"/><!-- 标题文字大小 -->
+
+        <attr name="title_text_color" format="color|reference"/><!-- 标题文字颜色 -->
+
+        <attr name="title_to_content_size" format="dimension|reference"/><!-- 标题到内容的距离大小 -->
+
+        <attr name="content_text" format="string|reference" /><!-- 内容文字 -->
+
+        <attr name="content_text_size" format="dimension|reference"/><!-- 内容文字大小 -->
+
+        <attr name="content_text_color" format="color|reference"/><!-- 内容文字颜色 -->
+
+        <attr name="tip_text" format="string|reference" /><!-- 提示文字 -->
+
+        <attr name="tip_text_size" format="dimension|reference"/><!-- 提示文字大小 -->
+
+        <attr name="tip_text_color" format="color|reference"/><!-- 提示文字颜色 -->
+
+        <attr name="is_slide_button" format="boolean"/><!-- 滑动开关 -->
+
+        <attr name="setting_have_top_line" format="boolean"/><!-- 顶部分隔线 -->
+
+        <attr name="setting_have_bottom_line" format="boolean"/><!-- 底部分隔线 -->
+
+    </declare-styleable>
+</resources>
